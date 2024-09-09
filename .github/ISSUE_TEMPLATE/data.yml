@@ -1,0 +1,23 @@
+name: 📂Data
+description: New data
+title: (replace with the data official name)
+labels:
+    - data
+assignees:
+    - TechQuery
+body:
+    - type: textarea
+      attributes:
+          label: Summary
+          description: Data description
+    - type: textarea
+      attributes:
+          label: Source
+          description: Its source links
+      validations:
+          required: true
+    - type: markdown
+      attributes:
+          value: >-
+              This template was generated with [Issue Forms
+              Creator](https://issue-forms-creator.netlify.app)
