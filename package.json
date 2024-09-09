@@ -23,8 +23,11 @@
     },
     "source": "src/index.ts",
     "dependencies": {
+        "dom-renderer": "^2.3.0",
         "fs-extra": "^11.2.0",
+        "happy-dom": "^15.7.3",
         "marked": "^14.1.2",
+        "tslib": "^2.7.0",
         "web-utility": "^4.4.0"
     },
     "devDependencies": {

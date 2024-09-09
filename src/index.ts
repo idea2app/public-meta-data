@@ -1,13 +1,15 @@
-#! /usr/bin/env ts-node
+#! /usr/bin/env tsx
 
 import { toHyphenCase } from 'web-utility';
 import { outputFile, readFile, outputJSON, readJSON } from 'fs-extra';
+import { marked } from 'marked';
+import './polyfill';
 
 import * as data from './data';
-import { marked } from 'marked';
+import { generatePageHTML, ListProps } from './DOM';
 
 const title = 'Public Meta Data',
-    list: { name: string; file: string }[] = [];
+    list: ListProps['list'] = [];
 
 (async () => {
     console.time(title);
@@ -25,34 +27,13 @@ const title = 'Public Meta Data',
     }
 
     const { homepage } = await readJSON('package.json'),
-        ReadMe = marked((await readFile('ReadMe.md')) + '');
+        ReadMe = marked((await readFile('ReadMe.md')) + '') as string;
 
-    const List = marked(`## All Data
-
-${list.map(
-    ({ name, file }, index) =>
-        `${++index}. [${name}](${new URL(file, homepage)})`
-)}`),
-        entry = 'public/index.html';
+    const entry = 'public/index.html';
 
     await outputFile(
         entry,
-        `<head>
-    <meta charset="UTF-8">
-
-    <title>${title}</title>
-    <link rel="icon" href="https://github.com/idea2app.png">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap-utilities.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/github-markdown-css">
-</head>
-<body class="m-3 markdown-body">
-    ${ReadMe}
-
-    ${List}
-</body>`
+        generatePageHTML({ title, homepage, ReadMe, list })
     );
     console.log(`[save] ${entry}`);
 
