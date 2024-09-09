@@ -1,5 +1,9 @@
 {
     "compilerOptions": {
-        "strict": true
-    }
+        "strict": true,
+        "jsx": "react-jsx",
+        "jsxImportSource": "dom-renderer",
+        "importHelpers": true
+    },
+    "include": ["src/**/*"]
 }
